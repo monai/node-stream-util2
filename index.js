@@ -151,7 +151,7 @@ function readFunction(options, func) {
     });
 }
 
-function workerStream(options, worker) {
+function transformWorker(options, worker) {
     if (typeof options == 'function') {
         worker = options;
         options = {};
