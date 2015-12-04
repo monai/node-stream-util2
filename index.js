@@ -129,7 +129,7 @@ function writeConsole() {
     });
 }
 
-function readFunction(options, func) {
+function readFunction(options, fn) {
     var T, t0;
     
     options = options || {};
@@ -147,11 +147,11 @@ function readFunction(options, func) {
             dt = t0 - t;
         }
         
-        this.push(func(dt, T));
+        this.push(fn(dt, T));
     });
 }
 
-function workerStream(options, worker) {
+function transformWorker(options, worker) {
     if (typeof options == 'function') {
         worker = options;
         options = {};
