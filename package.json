@@ -1,6 +1,6 @@
 {
   "name": "stream-util2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Stream utilities",
   "main": "index.js",
   "files": [
@@ -28,5 +28,5 @@
   },
   "homepage": "https://github.com/monai/node-stream-util2#readme",
   "author": "monai",
-  "license": "ISC",
+  "license": "ISC"
 }
