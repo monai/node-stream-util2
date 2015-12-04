@@ -1,5 +1,7 @@
 # stream-util2
 
+[![npm version](http://img.shields.io/npm/v/stream-util2.svg)](https://www.npmjs.org/package/stream-util2)
+
 Various stream utilities.
 
 ## Installation
