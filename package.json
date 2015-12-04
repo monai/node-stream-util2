@@ -4,7 +4,9 @@
   "description": "Stream utilities",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "README.md",
+    "package.json"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,9 +15,18 @@
     "async": "^1.5.0",
     "readable-stream": "^2.0.4"
   },
+  "devDependencies": {},
   "keywords": [
     "stream"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monai/node-stream-util2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/monai/node-stream-util2/issues"
+  },
+  "homepage": "https://github.com/monai/node-stream-util2#readme",
   "author": "monai",
-  "license": "ISC"
+  "license": "ISC",
 }
