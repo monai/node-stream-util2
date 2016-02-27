@@ -47,9 +47,9 @@ function readable(callback) {
     stream._read = _read;
     return stream;
     
-    function _read() {
+    function _read(size) {
         /*jshint validthis: true */
-        return callback.call(this);
+        return callback.call(this, size);
     }
 }
 

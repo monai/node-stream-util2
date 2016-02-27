@@ -21,7 +21,7 @@ Return transform stream in object mode.
 
 Return readable stream in object mode.
 
-- Callback implements `_read`.
+- Callback implements `_read`. Arguments: size.
 
 ### writable(callback)
 
