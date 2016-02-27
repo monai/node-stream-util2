@@ -1,6 +1,6 @@
 {
   "name": "stream-util2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Stream utilities",
   "main": "index.js",
   "files": [
