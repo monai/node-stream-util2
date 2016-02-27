@@ -1,6 +1,6 @@
 {
   "name": "stream-util2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Stream utilities",
   "main": "index.js",
   "files": [
@@ -12,8 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "readable-stream": "^2.0.4"
+    "async": "^1.5.2",
+    "readable-stream": "^2.0.5"
   },
   "devDependencies": {},
   "keywords": [
