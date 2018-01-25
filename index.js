@@ -1,169 +1,125 @@
-var async     = require('async');
-var stream    = require('readable-stream');
-var Readable  = stream.Readable;
-var Writable  = stream.Writable;
-var Transform = stream.Transform;
+'use strict';
+
+const stream = require('readable-stream');
+const { Readable, Writable, Transform } = stream;
 
 module.exports = {
-    transform       : transform,
-    readable        : readable,
-    writable        : writable,
-    buffer          : buffer,
-    toString        : toString,
-    readArray       : readArray,
-    pushArray       : pushArray,
-    bufferArray     : bufferArray,
-    writeNull       : writeNull,
-    writeConsole    : writeConsole,
-    readFunction    : readFunction,
-    transformWorker : transformWorker
+  transform,
+  readable,
+  writable,
+
+  buffer,
+  toString,
+  consoleLog,
+
+  readArray,
+  pushArray,
+  bufferArray,
+
+  writeVoid,
+  readFunction,
 };
 
-function transform(callback, flush) {
-    var stream;
-    
-    stream =  new Transform({ objectMode: true });
-    stream._transform = _transform;
-    if (flush) {
-        stream._flush = _flush;
-    }
-    return stream;
-    
-    function _transform(chunk, enc, done) {
-        /*jshint validthis: true */
-        return callback.call(this, chunk, done);
-    }
-    
-    function _flush(done) {
-        /*jshint validthis: true */
-        return flush.call(this, done);
-    }
+function transform(transform, flush) {
+  /*jshint validthis: true */
+  return new Transform({
+    objectMode : true,
+    transform  : _transform,
+    flush
+  });
+
+  function _transform(chunk, enc, done) {
+    return transform.call(this, chunk, done);
+  }
 }
 
-function readable(callback) {
-    var stream;
-    
-    stream =  new Readable({ objectMode: true });
-    stream._read = _read;
-    return stream;
-    
-    function _read(size) {
-        /*jshint validthis: true */
-        return callback.call(this, size);
-    }
+function readable(read) {
+  return new Readable({
+    objectMode : true,
+    read
+  });
 }
 
-function writable(callback) {
-    var stream;
-    
-    stream =  new Writable({ objectMode: true });
-    stream._write = _write;
-    return stream;
-    
-    function _write(chunk, enc, done) {
-        /*jshint validthis: true */
-        return callback.call(this, chunk, done);
-    }
+function writable(write) {
+  /*jshint validthis: true */
+  return new Writable({
+    objectMode : true,
+    write      : _write
+  });
+
+  function _write(chunk, enc, done) {
+    return write.call(this, chunk, done);
+  }
 }
 
 function buffer() {
-    var chunks = [];
-    return transform(function (chunk, done) {
-        chunks.push(chunk);
-        done();
-    }, function (done) {
-        this.push(Buffer.concat(chunks));
-        done();
-    });
+  const chunks = [];
+  return transform((chunk, done) => {
+    chunks.push(chunk);
+    done();
+  }, done => done(null, Buffer.concat(chunks)));
 }
 
 function toString() {
-    return transform(function (chunk, callback) {
-        callback(null, chunk.toString());
-    });
+  return transform((chunk, done) => {
+    done(null, chunk.toString());
+  });
+}
+
+function consoleLog() {
+  return transform((chunk, done) => {
+    console.log(chunk);
+    done(null, chunk);
+  });
 }
 
 function readArray(array) {
-    var i = 0, l = array.length;
-    
-    return readable(function () {
-        if (i < l) {
-            this.push(array[i++]);
-        }
-        
-        if (i == l) {
-            this.push(null);
-        }
-    });
+  let i = 0;
+  const l = array.length;
+
+  return readable(function () {
+    if (i < l) {
+      this.push(array[i++]);
+    } else {
+      this.push(null);
+    }
+  });
 }
 
 function pushArray(array) {
-    return transform(function (chunk, done) {
-        array.push(chunk);
-        done(null, chunk);
-    });
+  return transform((chunk, done) => {
+    array.push(chunk);
+    done(null, chunk);
+  });
 }
 
 
 function bufferArray() {
-    var chunks = [];
-    return transform(function (chunk, done) {
-        chunks.push(chunk);
-        done();
-    }, function (done) {
-        this.push(chunks);
-        done();
-    });
+  const chunks = [];
+  return transform((chunk, done) => {
+    chunks.push(chunk);
+    done();
+  }, done => done(null, chunks));
 }
 
-function writeNull() {
-    return writable(function (chunk, done) {
-        done();
-    });
-}
-
-function writeConsole() {
-    return transform(function (chunk, done) {
-        console.log(chunk);
-        done(null, chunk);
-    });
+function writeVoid() {
+  return writable((_, done) => done());
 }
 
 function readFunction(options, fn) {
-    var T, t0;
-    
-    options = options || {};
-    T = options.T || 1000;
-    t0 = +new Date();
-    
-    return readable(function () {
-        var t, dt;
-        
-        t = +new Date();
-        dt = t - t0;
-        
-        if (dt > T) {
-            t0 = t0 + T;
-            dt = t0 - t;
-        }
-        
-        this.push(fn(dt, T));
-    });
-}
+  options = options || {};
+  let T = options.T || 1000;
+  let t0 = Date.now();
 
-function transformWorker(options, worker) {
-    if (typeof options == 'function') {
-        worker = options;
-        options = {};
+  return readable(function () {
+    let t = Date.now();
+    let dt = t - t0;
+
+    if (dt > T) {
+      t0 = t0 + T;
+      dt = t0 - t;
     }
-    options.concurency = options.concurency || 4;
-    
-    var queue = async.queue(worker, options.concurency);
-    return transform(function (chunk, done) {
-        queue.push(chunk, function (error) {
-            done(error, chunk);
-        });
-    }, function (done) {
-        queue.drain = done;
-    });
+
+    this.push(fn(dt, T));
+  });
 }

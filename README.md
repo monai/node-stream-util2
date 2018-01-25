@@ -10,73 +10,65 @@ Various stream utilities.
 
 ## API
 
-### transform(callback, flush)
+### transform(transform, [flush])
 
-Return transform stream in object mode.
+Returns a transform stream in object mode.
 
-- Callback implements `_transform`. Arguments: chunk, callback.
-- Flush implements `_flush`. Arguments: callback.
+- `transform` implements [`_transform`](https://nodejs.org/api/stream.html#stream_transform_transform_chunk_encoding_callback). Arguments: `chunk`, `callback`.
+- `flush` implements [`_flush`](https://nodejs.org/api/stream.html#stream_transform_flush_callback).
 
-### readable(callback)
+### readable(read)
 
-Return readable stream in object mode.
+Returns a readable stream in object mode.
 
-- Callback implements `_read`. Arguments: size.
+- `read` implements [`_read`](https://nodejs.org/api/stream.html#stream_readable_read_size_1).
 
-### writable(callback)
+### writable(write)
 
-Return writable stream in object mode.
+Returns a writable stream in object mode.
 
-- Callback implements `_write`. Arguments: chunk, callback.
+- `write` implements [`_write`](https://nodejs.org/api/stream.html#stream_writable_write_chunk_encoding_callback_1). Arguments: `chunk`, `callback`.
 
 ### buffer()
 
-Returns transform stream that buffers chunks and adds a concatenated chunk of data into the queue.
+Returns a transform stream that buffers chunks of `<Buffer>` type and emits concatenated buffer down the stream.
 
 ### toString()
 
-Returns transform stream that calls `chunk.toString()` for each chunk.
+Returns a transform stream that calls `chunk.toString()` for each chunk.
+
+### consoleLog()
+
+Returns a transform stream that calls `console.log(chunk)` for each chunk.
 
 ### readArray(array)
 
-Returns readable stream that reads array and adds each item into the queue.
+Returns a readable stream that reads the array and emits each item down the stream.
 
 ### pushArray(array)
 
-Returns transform stream that pushes each chunk to array.
+Returns a transform stream that pushes each chunk to `array`.
 
 ### bufferArray()
 
-Returns transform stream that buffers chunks and adds a chunk array of data into the queue.
+Returns a transform stream that buffers chunks to an array and emits it down the stream.
 
-### writeNull()
+### writeVoid()
 
-Returns writable stream that does nothing.
-
-### writeConsole()
-
-Returns transform stream that calls `console.log(chunk)` for each chunk.
+Returns a writable stream that does nothing.
 
 ### readFunction(options, fn)
 
-Returns readable stream that generates data from periodic function `fn`.
+Returns a readable stream that generates data from periodic function `fn`.
 
 Options:
 
 - `T` - function period in milliseconds. Default is `1000`.
 
-Function arguments:
+`fn` arguments:
 
 - `dt` - delta time since beginning of current period.
 - `T` - period.
-
-### transformWorker(options, worker)
-
-Returns transform stream for parallel processing.
-
-- Options:
-    - `concurency` - number of parallel task. Default: `4`.
-- Callback implements `_transform`. Arguments: chunk, callback.
 
 ## License
 
