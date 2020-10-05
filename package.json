@@ -4,6 +4,7 @@
   "description": "Stream Utilities",
   "main": "index.js",
   "files": [
+    "lib",
     "index.js",
     "README.md",
     "package.json"
