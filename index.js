@@ -1,18 +1,30 @@
 'use strict';
 
+const readable = require('./lib/readable');
+const transform = require('./lib/transform');
+const writable = require('./lib/writable');
+const readArray = require('./lib/readArray');
+const readFunction = require('./lib/readFunction');
+const buffer = require('./lib/buffer');
+const toString = require('./lib/toString');
+const consoleLog = require('./lib/consoleLog');
+const pushArray = require('./lib/pushArray');
+const bufferArray = require('./lib/bufferArray');
+const writeVoid = require('./lib/writeVoid');
+
 module.exports = {
-  readable: require('./lib/readable'),
-  transform: require('./lib/transform'),
-  writable: require('./lib/writable'),
+  readable,
+  transform,
+  writable,
 
-  readArray: require('./lib/readArray'),
-  readFunction: require('./lib/readFunction'),
+  readArray,
+  readFunction,
 
-  buffer: require('./lib/buffer'),
-  toString: require('./lib/toString'),
-  consoleLog: require('./lib/consoleLog'),
-  pushArray: require('./lib/pushArray'),
-  bufferArray: require('./lib/bufferArray'),
+  buffer,
+  toString,
+  consoleLog,
+  pushArray,
+  bufferArray,
 
-  writeVoid: require('./lib/writeVoid'),
+  writeVoid,
 };
