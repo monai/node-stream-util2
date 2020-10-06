@@ -70,6 +70,19 @@ Options:
 - `dt` - delta time since beginning of current period.
 - `T` - period.
 
+### writePromise([options])
+
+Returns instance of `PromiseWriteStream`, a writable stream that conforms to `Promise`. It buffers data and resolves the promise right before emitting the `finish` event.
+
+Options:
+
+- [`highWaterMark`](https://nodejs.org/api/stream.html#stream_implementing_a_writable_stream).
+- [`defaultEncoding`](https://nodejs.org/api/stream.html#stream_implementing_a_writable_stream).
+
+#### PromiseWriteStream
+
+`PromiseWriteStream` is a writable stream that conforms to `Promise`. Internal buffer and promise can be retrieved using `writablePromise.buffer` and `writablePromise.promise`, respectively.
+
 ## License
 
 ISC
