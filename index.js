@@ -11,7 +11,7 @@ const consoleLog = require('./lib/consoleLog');
 const pushArray = require('./lib/pushArray');
 const bufferArray = require('./lib/bufferArray');
 const writeVoid = require('./lib/writeVoid');
-const { writePromise, PromiseWriteStream } = require('./lib/writePromise');
+const PromiseWriteStream = require('./lib/writePromise');
 
 module.exports = {
   PromiseWriteStream,
@@ -30,5 +30,4 @@ module.exports = {
   bufferArray,
 
   writeVoid,
-  writePromise,
 };
