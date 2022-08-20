@@ -3,15 +3,15 @@
 const readable = require('./lib/readable');
 const transform = require('./lib/transform');
 const writable = require('./lib/writable');
-const readArray = require('./lib/readArray');
-const readFunction = require('./lib/readFunction');
+const readArray = require('./lib/read_array');
+const readFunction = require('./lib/read_function');
 const buffer = require('./lib/buffer');
-const toString = require('./lib/toString');
-const consoleLog = require('./lib/consoleLog');
-const pushArray = require('./lib/pushArray');
-const bufferArray = require('./lib/bufferArray');
-const writeVoid = require('./lib/writeVoid');
-const PromiseWriteStream = require('./lib/writePromise');
+const toString = require('./lib/to_string');
+const consoleLog = require('./lib/console_log');
+const pushArray = require('./lib/push_array');
+const bufferArray = require('./lib/buffer_array');
+const writeVoid = require('./lib/write_void');
+const PromiseWriteStream = require('./lib/write_promise');
 
 module.exports = {
   PromiseWriteStream,
